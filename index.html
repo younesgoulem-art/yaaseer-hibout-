@@ -1,129 +1,389 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
+لالا هدا كودي <!DOCTYPE html>
+<html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ياسر حيبوط | مطور ويب</title>
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css" />
+  <title>EventHub - Your Event, Simplified</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: #000;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    canvas#bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(10px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 60px;
+      z-index: 1000;
+      transition: background 0.3s ease;
+    }
+
+    header:hover {
+      background: rgba(0, 0, 0, 0.8);
+    }
+
+    .logo {
+      font-size: 1.3rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #00bcd4;
+    }
+
+    section {
+      min-height: 100vh;
+      padding: 120px 10% 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    #home {
+      position: relative;
+    }
+
+    #home::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.6), rgba(0,0,0,0.9));
+    }
+
+    #home .content {
+      position: relative;
+      z-index: 1;
+    }
+
+    #home h1 {
+      font-size: 3rem;
+      line-height: 1.3;
+      max-width: 700px;
+      margin-bottom: 20px;
+      animation: fadeIn 1.5s ease forwards;
+    }
+
+    #home p {
+      font-size: 1.2rem;
+      color: #ccc;
+      animation: fadeIn 2.5s ease forwards;
+    }
+
+    /* Services section */
+    #services {
+      background: rgba(255,255,255,0.03);
+      border-top: 1px solid rgba(255,255,255,0.1);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    #services h2 {
+      margin-bottom: 40px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 40px;
+      width: 100%;
+      max-width: 1100px;
+    }
+
+    .card {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+
+    .card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      filter: brightness(0.8);
+    }
+
+    .card-content {
+      padding: 25px;
+    }
+
+    .card-content h3 {
+      color: #00bcd4;
+      margin-bottom: 10px;
+      font-size: 1.4rem;
+    }
+
+    .card-content p {
+      color: #ccc;
+      font-size: 1rem;
+      margin-bottom: 20px;
+    }
+
+    .card-content a {
+      display: inline-block;
+      background: #00bcd4;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+
+    .card-content a:hover {
+      background: #0097a7;
+    }
+
+    #about p {
+      max-width: 800px;
+      line-height: 1.7;
+      color: #ccc;
+      font-size: 1.1rem;
+      margin-top: 20px;
+    }
+
+    #request form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      width: 100%;
+      max-width: 500px;
+    }
+
+    #request input, #request textarea, #request select {
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      outline: none;
+      font-size: 1rem;
+    }
+
+    #request button {
+      background: #00bcd4;
+      border: none;
+      color: white;
+      font-size: 1rem;
+      padding: 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    #request button:hover {
+      background: #0097a7;
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px;
+      background: #000;
+      color: #888;
+      font-size: 0.9rem;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s ease;
+    }
+
+    .fade.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
 </head>
 <body>
 
-  <!-- ===== الهيدر ===== -->
-  <header class="header">
-    <div class="container header-container">
-      <div class="logo">ياسر <span>حيبوط</span></div>
-      <nav class="nav">
-        <ul>
-          <li><a href="#home" class="active">الرئيسية</a></li>
-          <li><a href="#services">خدماتي</a></li>
-          <li><a href="#projects">أعمالي</a></li>
-          <li><a href="#about">عني</a></li>
-          <li><a href="#contact">تواصل</a></li>
-        </ul>
-      </nav>
-      <button class="hamburger" id="hamburger">☰</button>
-    </div>
+  <canvas id="bg"></canvas>
+
+  <header>
+    <div class="logo">EventHub</div>
+    <nav>
+      <ul>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#request">Request Event</a></li>
+        <li><a href="#about">About</a></li>
+      </ul>
+    </nav>
   </header>
 
-  <!-- ===== البداية ===== -->
-  <section id="home" class="hero">
-    <div class="container hero-content">
-      <div class="hero-text">
-        <h1>مرحبًا، أنا <span>ياسر حيبوط</span></h1>
-        <p>مطور واجهات ويب عصرية وسريعة الأداء. أبني مواقع جميلة وعملية بلغة HTML وCSS وJavaScript.</p>
-        <div class="hero-buttons">
-          <a href="#projects" class="btn primary">شاهد أعمالي</a>
-          <a href="#contact" class="btn secondary">تواصل معي</a>
-        </div>
-      </div>
-      <div class="hero-image">
-        <img src="https://i.ibb.co/FgPqXyM/dev-dark.png" alt="ياسر حيبوط">
-      </div>
+  <section id="home">
+    <div class="content">
+      <h1>Plan Your Event Seamlessly</h1>
+      <p>We connect you with the best venues, hotels, cars, and catering services for your perfect event.</p>
     </div>
   </section>
 
-  <!-- ===== الخدمات ===== -->
-  <section id="services">
-    <div class="container">
-      <h2>خدماتي</h2>
-      <div class="service-grid">
-        <div class="service-card">
-          <h3>تصميم واجهات ويب</h3>
-          <p>أصمم صفحات ويب حديثة متجاوبة لجميع الأجهزة.</p>
-        </div>
-        <div class="service-card">
-          <h3>تطوير المواقع</h3>
-          <p>أطور مواقع تفاعلية باستخدام HTML وCSS وJavaScript.</p>
-        </div>
-        <div class="service-card">
-          <h3>تحسين الأداء</h3>
-          <p>أجعل موقعك أسرع وأخف بفضل تحسين الكود والتحميل.</p>
+  <section id="services" class="fade">
+    <h2>Our Services</h2>
+    <div class="cards">
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1542317854-5c2c39d96b60?auto=format&fit=crop&w=900&q=80" alt="Hotels">
+        <div class="card-content">
+          <h3>Hotels</h3>
+          <p>Find and book the best hotels for your event attendees.</p>
+          <a href="#">Learn More</a>
         </div>
       </div>
-    </div>
-  </section>
-
-  <!-- ===== الأعمال ===== -->
-  <section id="projects">
-    <div class="container">
-      <h2>أعمالي</h2>
-      <div class="project-grid">
-        <div class="project-card">
-          <img src="https://i.ibb.co/tD8Srw5/project1.jpg" alt="مشروع 1">
-          <div class="overlay">
-            <h3>موقع شركة حديث</h3>
-            <p>واجهة جذابة بخطوط عصرية وأداء سريع.</p>
-          </div>
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1508610048659-a06d16ff3c3e?auto=format&fit=crop&w=900&q=80" alt="Cars">
+        <div class="card-content">
+          <h3>Cars</h3>
+          <p>Luxury and comfort transportation services for your guests.</p>
+          <a href="#">Learn More</a>
         </div>
-        <div class="project-card">
-          <img src="https://i.ibb.co/WB2V6Qn/project2.jpg" alt="مشروع 2">
-          <div class="overlay">
-            <h3>صفحة هبوط تسويقية</h3>
-            <p>تصميم بسيط ومناسب لحملات الإعلانات.</p>
-          </div>
+      </div>
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1571501679680-de32f1e7aad4?auto=format&fit=crop&w=900&q=80" alt="Venues">
+        <div class="card-content">
+          <h3>Venues</h3>
+          <p>Book halls, conference rooms, or outdoor spaces that fit your event.</p>
+          <a href="#">Learn More</a>
+        </div>
+      </div>
+      <div class="card">
+        <img src="https://images.unsplash.com/photo-1572441710642-04b9f3c0cf54?auto=format&fit=crop&w=900&q=80" alt="Catering">
+        <div class="card-content">
+          <h3>Catering</h3>
+          <p>Delicious food and beverages tailored to your event style.</p>
+          <a href="#">Learn More</a>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===== عني ===== -->
-  <section id="about">
-    <div class="container about-container">
-      <div class="about-image">
-        <img src="https://i.ibb.co/ZL6bL2M/profile-dark.jpg" alt="ياسر حيبوط">
-      </div>
-      <div class="about-text">
-        <h2>عنّي</h2>
-        <p>أنا ياسر حيبوط، مطور ويب شغوف بتصميم واجهات تفاعلية أنيقة وسهلة الاستخدام. أحب تحويل الأفكار إلى مواقع حقيقية بتجربة مستخدم ممتازة.</p>
-        <p>أسعى دائمًا إلى تقديم أعمال بجودة عالية وإتقان في التفاصيل.</p>
-      </div>
-    </div>
+  <section id="request" class="fade">
+    <h2>Request Your Event</h2>
+    <form>
+      <input type="text" placeholder="Company Name" required />
+      <input type="email" placeholder="Your Email" required />
+      <input type="date" placeholder="Event Date" required />
+      <input type="number" placeholder="Number of Guests" required />
+      <select required>
+        <option value="">Select Required Services</option>
+        <option value="hotel">Hotel</option>
+        <option value="car">Car</option>
+        <option value="venue">Venue</option>
+        <option value="catering">Catering</option>
+        <option value="all">All Services</option>
+      </select>
+      <textarea placeholder="Additional Notes" rows="4"></textarea>
+      <button type="submit">Submit Request</button>
+    </form>
   </section>
 
-  <!-- ===== تواصل ===== -->
-  <section id="contact" class="contact">
-    <div class="container">
-      <h2>تواصل معي</h2>
-      <form>
-        <input type="text" placeholder="الاسم الكامل" required>
-        <input type="email" placeholder="البريد الإلكتروني" required>
-        <textarea rows="4" placeholder="رسالتك"></textarea>
-        <button type="submit">إرسال</button>
-      </form>
-    </div>
+  <section id="about" class="fade">
+    <h2>About Us</h2>
+    <p>EventHub simplifies event planning by connecting companies with trusted service providers. Our mission is to make every event seamless, memorable, and stress-free.</p>
   </section>
 
-  <!-- ===== الفوتر ===== -->
-  <footer class="footer">
-    <p>© 2025 ياسر حيبوط - جميع الحقوق محفوظة.</p>
-    <div class="socials">
-      <a href="#">LinkedIn</a> |
-      <a href="#">GitHub</a> |
-      <a href="#">Instagram</a>
-    </div>
+  <footer>
+    © 2025 EventHub. All Rights Reserved.
   </footer>
 
-  <script src="js/script.js"></script>
+  <script>
+    // Particles background
+    const canvas = document.getElementById('bg');
+    const ctx = canvas.getContext('2d');
+    let particlesArray = [];
+    let w, h;
+
+    function initCanvas() {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+      particlesArray = [];
+      for (let i = 0; i < 120; i++) {
+        particlesArray.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          size: Math.random() * 2,
+          speedX: (Math.random() - 0.5) * 0.5,
+          speedY: (Math.random() - 0.5) * 0.5
+        });
+      }
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = "rgba(255, 255, 255, 0.6)";
+      particlesArray.forEach(p => {
+        p.x += p.speedX;
+        p.y += p.speedY;
+        if (p.x < 0 || p.x > w) p.speedX *= -1;
+        if (p.y < 0 || p.y > h) p.speedY *= -1;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+      });
+      requestAnimationFrame(animateParticles);
+    }
+
+    window.addEventListener('resize', initCanvas);
+    initCanvas();
+    animateParticles();
+
+    // Scroll fade-in
+    const faders = document.querySelectorAll('.fade');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.2 });
+    faders.forEach(fade => observer.observe(fade));
+  </script>
 </body>
 </html>
+
